@@ -24,7 +24,11 @@ export default function RootLayout({
 }>): JSX.Element {
   return (
     <html lang="ja">
-      <body className={`${dotGothic16.className}`}>{children}</body>
+      <body
+        className={`bg-gradient-to-r from-pink-100 via-sky-100 to-violet-100 ${dotGothic16.className}`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
