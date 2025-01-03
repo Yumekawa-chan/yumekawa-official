@@ -1,12 +1,16 @@
-import { JSX } from 'react';
-import { FaGithub, FaPenNib } from 'react-icons/fa';
+import { FaGithub, FaPenNib, FaMapMarkerAlt, FaTools } from 'react-icons/fa';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaMapMarkerAlt, FaTools } from 'react-icons/fa';
+import { JSX } from 'react';
+
+type Props = {
+  location: string;
+  doing: string;
+};
 
 function IconLink({
   href,
-  icon: Icon,
+  icon,
 }: {
   href: string;
   icon: JSX.Element;
@@ -18,7 +22,7 @@ function IconLink({
       rel="noopener noreferrer"
       className="text-gray-500 hover:text-pink-500 text-2xl"
     >
-      {Icon}
+      {icon}
     </Link>
   );
 }
@@ -55,12 +59,33 @@ function Section({ title, color, icon, children }: SectionProps): JSX.Element {
   return (
     <div className="text-center">
       <h3
-        className={`text-lg font-semibold text-${color} flex items-center justify-center`}
+        className={`text-lg font-semibold flex items-center justify-center text-${color}`}
       >
         {title}
         <div className="ml-2">{icon}</div>
       </h3>
       <p className="text-gray-600">{children}</p>
+    </div>
+  );
+}
+
+function CurrentSection({ location, doing }: Props): JSX.Element {
+  return (
+    <div>
+      <div className="text-center mb-4">
+        <p className="text-xl font-bold text-pink-500 mb-2">Yumekawa LIVE</p>
+        <p className="text-gray-600 text-sm">
+          Yumekawa-chanの"今"がリアルタイムで更新されます🍭
+        </p>
+      </div>
+      <div className="space-y-4">
+        <Section title="今ココ" color="violet-500" icon={<FaMapMarkerAlt />}>
+          {location}
+        </Section>
+        <Section title="今していること" color="violet-500" icon={<FaTools />}>
+          {doing}
+        </Section>
+      </div>
     </div>
   );
 }
@@ -83,32 +108,11 @@ function ProfileSection(): JSX.Element {
   );
 }
 
-function CurrentSection(): JSX.Element {
-  return (
-    <div>
-      <div className="text-center mb-4">
-        <p className="text-xl font-bold text-pink-500 mb-2">Yumekawa LIVE</p>
-        <p className="text-gray-600 text-sm">
-          Yumekawa-chanの"今"がリアルタイムで更新されます🍭
-        </p>
-      </div>
-      <div className="space-y-4">
-        <Section title="今ココ" color="violet-500" icon={<FaMapMarkerAlt />}>
-          自宅
-        </Section>
-        <Section title="今していること" color="violet-500" icon={<FaTools />}>
-          これ作っている
-        </Section>
-      </div>
-    </div>
-  );
-}
-
-export default function MainCard(): JSX.Element {
+export default function MainCard({ location, doing }: Props): JSX.Element {
   return (
     <div className="bg-white shadow-lg rounded-lg p-6 max-w-md w-full h-auto">
       <ProfileSection />
-      <CurrentSection />
+      <CurrentSection location={location} doing={doing} />
     </div>
   );
 }
