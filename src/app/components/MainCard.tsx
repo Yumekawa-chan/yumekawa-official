@@ -3,62 +3,42 @@ import { FaGithub, FaPenNib } from 'react-icons/fa';
 import Link from 'next/link';
 import Image from 'next/image';
 
-function ProfileSection(): JSX.Element {
+function IconLink({
+  href,
+  icon: Icon,
+}: {
+  href: string;
+  icon: JSX.Element;
+}): JSX.Element {
   return (
-    <div className="text-center border-b border-gray-300 pb-4 mb-4">
-      <h1 className="text-2xl font-bold text-pink-500 mb-2">
-        Yumekawa Holdings
-      </h1>
-      <p className="text-gray-600 text-sm mb-4">
-        世界をゆめかわいく侵略します🌈
-      </p>
-
-      <div className="flex flex-col items-center mb-4">
-        <Image
-          src="/icon.png"
-          alt="Yumekawa-chan"
-          width={150}
-          height={150}
-          className="rounded-full shadow-md"
-        />
-        <p className="text-pink-500 font-semibold mt-2">Yumekawa-chan</p>
-        <p className="text-gray-600 text-sm">
-          現実を溶かし、甘美なる悪夢で染め上げるゆめかわの造物主🦄
-        </p>
-      </div>
-
-      <div className="flex justify-center space-x-4">
-        <Link
-          href="https://github.com/Yumekawa-chan"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-gray-500 hover:text-pink-500 text-2xl"
-        >
-          <FaGithub />
-        </Link>
-        <Link
-          href="https://zenn.dev/yumekawa"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-gray-500 hover:text-pink-500 text-2xl"
-        >
-          <FaPenNib />
-        </Link>
-      </div>
-    </div>
+    <Link
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-gray-500 hover:text-pink-500 text-2xl"
+    >
+      {Icon}
+    </Link>
   );
 }
 
-function CurrentSection(): JSX.Element {
+function ProfileCard(): JSX.Element {
   return (
-    <div className="space-y-4">
-      <Section title="今していること" color="violet-500">
-        これ作っている
-      </Section>
-      <Section title="今いる場所" color="pink-500">
-        自宅
-      </Section>
-      <TodoSection />
+    <div className="flex flex-col items-center mb-4">
+      <Image
+        src="/icon.png"
+        alt="Yumekawa-chan"
+        width={150}
+        height={150}
+        className="rounded-full shadow-md"
+      />
+      <div className="inline-block text-center p-2">
+        <p className="text-sm font-bold text-pink-500">代表取締役</p>
+        <p className="text-lg font-bold text-violet-500">Yumekawa-chan</p>
+      </div>
+      <p className="text-gray-600 text-sm">
+        現実を溶かし、甘美なる悪夢で染め上げるゆめかわの造物主🦄
+      </p>
     </div>
   );
 }
@@ -78,41 +58,40 @@ function Section({ title, color, children }: SectionProps): JSX.Element {
   );
 }
 
-type Task = {
-  id: number;
-  title: string;
-  completed: boolean;
-};
-
-function getTasks(): Task[] {
-  return [
-    { id: 1, title: 'タスク1: ダミーチェック', completed: false },
-    { id: 2, title: 'タスク2: ダミーチェック', completed: false },
-    { id: 3, title: 'タスク3: ダミーチェック', completed: false },
-  ];
+function ProfileSection(): JSX.Element {
+  return (
+    <div className="text-center border-b border-gray-300 pb-4 mb-4">
+      <h1 className="text-2xl font-bold text-pink-500 mb-2">
+        Yumekawa Holdings
+      </h1>
+      <p className="text-gray-600 text-sm mb-4">
+        世界をゆめかわいく侵略します🌈
+      </p>
+      <ProfileCard />
+      <div className="flex justify-center space-x-4">
+        <IconLink href="https://github.com/Yumekawa-chan" icon={<FaGithub />} />
+        <IconLink href="https://zenn.dev/yumekawa" icon={<FaPenNib />} />
+      </div>
+    </div>
+  );
 }
 
-function TodoSection(): JSX.Element {
-  const tasks = getTasks();
-
+function CurrentSection(): JSX.Element {
   return (
-    <div className="text-center mt-4">
-      <h3 className="text-lg font-semibold text-violet-500 mb-4">本日のTODO</h3>
-      <div className="flex flex-col items-start space-y-3">
-        {tasks.map((task) => (
-          <div
-            key={task.id}
-            className="flex items-center bg-violet-100 p-2 rounded-md shadow-sm w-full"
-          >
-            <input
-              type="checkbox"
-              disabled
-              checked={task.completed}
-              className="mr-3 w-5 h-5 text-violet-500 focus:ring-violet-500 cursor-not-allowed"
-            />
-            <span className="text-gray-700">{task.title}</span>
-          </div>
-        ))}
+    <div>
+      <div className="text-center mb-4">
+        <p className="text-xl font-bold text-pink-500 mb-2">Yumekawa LIVE</p>
+        <p className="text-gray-600 text-sm">
+          Yumekawa-chanの"今"がリアルタイムで更新されます🍭
+        </p>
+      </div>
+      <div className="space-y-4">
+        <Section title="今ココ" color="violet-500">
+          自宅
+        </Section>
+        <Section title="今していること" color="violet-500">
+          これ作っている
+        </Section>
       </div>
     </div>
   );
