@@ -2,6 +2,7 @@ import { JSX } from 'react';
 import { FaGithub, FaPenNib } from 'react-icons/fa';
 import Link from 'next/link';
 import Image from 'next/image';
+import { FaMapMarkerAlt, FaTools } from 'react-icons/fa';
 
 function IconLink({
   href,
@@ -46,13 +47,19 @@ function ProfileCard(): JSX.Element {
 type SectionProps = {
   title: string;
   color: string;
+  icon: JSX.Element;
   children: string | JSX.Element;
 };
 
-function Section({ title, color, children }: SectionProps): JSX.Element {
+function Section({ title, color, icon, children }: SectionProps): JSX.Element {
   return (
     <div className="text-center">
-      <h3 className={`text-lg font-semibold text-${color}`}>{title}</h3>
+      <h3
+        className={`text-lg font-semibold text-${color} flex items-center justify-center`}
+      >
+        {title}
+        <div className="ml-2">{icon}</div>
+      </h3>
       <p className="text-gray-600">{children}</p>
     </div>
   );
@@ -86,10 +93,10 @@ function CurrentSection(): JSX.Element {
         </p>
       </div>
       <div className="space-y-4">
-        <Section title="今ココ" color="violet-500">
+        <Section title="今ココ" color="violet-500" icon={<FaMapMarkerAlt />}>
           自宅
         </Section>
-        <Section title="今していること" color="violet-500">
+        <Section title="今していること" color="violet-500" icon={<FaTools />}>
           これ作っている
         </Section>
       </div>
@@ -99,7 +106,7 @@ function CurrentSection(): JSX.Element {
 
 export default function MainCard(): JSX.Element {
   return (
-    <div className="bg-white shadow-lg rounded-lg p-6 max-w-md w-full">
+    <div className="bg-white shadow-lg rounded-lg p-6 max-w-md w-full h-auto">
       <ProfileSection />
       <CurrentSection />
     </div>
