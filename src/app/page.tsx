@@ -2,10 +2,10 @@ import MainCard from '@/app/components/MainCard';
 import { ReactElement } from 'react';
 
 async function fetchStatus() {
-  const response = await fetch('http://localhost:3000/api/getStatus', {
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const response = await fetch(`${baseUrl}/api/getStatus`, {
     cache: 'no-store',
   });
-
   if (!response.ok) {
     return {
       location: '不明',
